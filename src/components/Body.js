@@ -6,6 +6,7 @@ import Table from "./Table";
 import SearchBar from "./SearchBar";
 import Pagination from "./Pagination";
 import DeleteSelectedButton from "./DeleteSelectedButton";
+import Shimmer from "./Shimmer";
 
 const Body = () => {
   const { filteredUsers, setFilteredUsers, users, setUsers } = useApi();
@@ -87,6 +88,9 @@ const Body = () => {
   const startIndex = (currentPage - 1) * itemsPerPage;
   const endIndex = startIndex + itemsPerPage;
   const currentUsers = filteredUsers.slice(startIndex, endIndex);
+
+  console.log(currentUsers);
+  if (currentUsers.length === 0) return <Shimmer />;
 
   return (
     <div className="container">
