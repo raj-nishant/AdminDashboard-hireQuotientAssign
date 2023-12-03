@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import "../styles/style.css";
 import useApi from "../utils/useApi";
 import { toast } from "react-toastify";
@@ -7,7 +7,7 @@ import SearchBar from "./SearchBar";
 import Pagination from "./Pagination";
 import DeleteSelectedButton from "./DeleteSelectedButton";
 
-const UserManagementInterface = () => {
+const Body = () => {
   const { filteredUsers, setFilteredUsers, users, setUsers } = useApi();
 
   const [currentPage, setCurrentPage] = useState(1);
@@ -27,19 +27,11 @@ const UserManagementInterface = () => {
         user.email.toLowerCase().includes(query) ||
         user.role.toLowerCase().includes(query)
     );
+    setFilteredUsers(filtered);
     setCurrentPage(1);
   };
 
-  const handleEdit = (id) => {
-    const rowToEdit = filteredUsers.find((user) => user.id === id);
-  };
-
   const handleDelete = (id) => {
-    if (!selectedRows.includes(id)) {
-      toast.error("Please select the row to delete.");
-      return;
-    }
-
     setFilteredUsers((prevFilteredUsers) =>
       prevFilteredUsers.filter((user) => user.id !== id)
     );
@@ -103,7 +95,6 @@ const UserManagementInterface = () => {
         users={currentUsers}
         selectedRows={selectedRows}
         handleRowSelection={handleRowSelection}
-        handleEdit={handleEdit}
         handleDelete={handleDelete}
         handleSelectAllRows={handleSelectAllRows}
       />
@@ -121,4 +112,4 @@ const UserManagementInterface = () => {
   );
 };
 
-export default UserManagementInterface;
+export default Body;
